@@ -3,7 +3,8 @@ using std::cout;
 using std::endl;
 using std::cin;
 #include  <climits>
-
+#include <stack>
+#include <cstring>
 /*
 *  Auther: Aman Arabzadeh
 *  This is just for excersize purpose, please use this code if you feel like you need it, 
@@ -278,6 +279,36 @@ node *inserts(node *head, int value){
 
 }
 
+// Check for balanced parentheses using stack 
+
+
+bool parenthesisChecker(char  arr[]){
+	int size = strlen(arr);  // Takes the size of the input
+
+	std::stack<char> stk;
+
+	for(size_t i = 0; i < size; i++){
+
+		if(arr[i]== '(' or arr[i] == '[' or arr[i]  == '{' ){
+
+			stk.push(arr[i]);
+
+
+		}else if(arr[i] ==  ')' or arr[i] == ']' or arr[i] == '}' ){
+			if(stk.empty()){
+				return false;
+			}else{
+				stk.pop();
+		}
+	}
+	}
+	if(stk.empty()){
+		return true;
+	}
+	return false;
+}
+
+
 int main(){
 	int A[] = {1,2,3,4,5,2000,999,-222,6,7,8,9,10,0,4, -1111};
 	size_t length = sizeof(A)/sizeof(int);
@@ -331,10 +362,16 @@ int main(){
    display(head);
 
 
+ char  par[] = "[][][](())";
 
 
+bool checkIF = parenthesisChecker(par);
 
-
+if(checkIF == true){
+	cout << "The list is even" << endl;
+}else{
+	cout << "List is not even" << endl;
+}
 
 
 

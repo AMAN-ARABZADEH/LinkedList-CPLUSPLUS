@@ -1,6 +1,7 @@
 #include <iostream>
 using std::cout;
 using std::endl;
+using std::cin;
 #include  <climits>
 
 /*
@@ -178,8 +179,8 @@ int RFindMin_T(node *head){
 	return minElement < head->data ? minElement : head->data;
 }
 
-// Searching linked list logic
- node *search(node *head, int key){
+// Searching linked list logic linear search slow )= 
+ node *sLearch(node *head, int key){
 	while(head != nullptr){
 		if(head->data == key){
 			return head;
@@ -190,18 +191,92 @@ int RFindMin_T(node *head){
 }
 
 
-// Now searching recursivly
-node *searchR(node *head, int key){
+// Now searching recursivly 
+node *LsearchR(node *head, int key){
 	// Terminating logic
 	if(head == nullptr){
 		return nullptr;
 	}else if( key == head->data){
 		return head;
 	}
-		return searchR(head->next, key);
+	return LsearchR(head->next, key);
+}
+
+/// search  a bit faster by using temp node, and 
+// modifying the head temp->next = head->next
+// it changes the osition of found nod to the first index in the list 
+// Lets see the code 
+
+node *searchTransposnode(node *PHead, int key){
+	node *tail = nullptr;
+	while(PHead != nullptr){
+		if(key == PHead->data){
+			tail->next = PHead->next;
+			PHead->next = head;
+			head = PHead;
+		    return PHead;
+		}
+		tail = PHead;
+		PHead = PHead->next;
+	}
+	return nullptr;
+}
+
+void insert(int val, int pos){
+	node *temp_node, *current_node;
+	if(pos == 0){
+		temp_node->data = val;
+		temp_node->next = head;
+		head = temp_node;
+	} current_node = head;
+	for(size_t index = 0; index < pos -1 && current_node != nullptr; index++){
+		current_node = current_node->next;
+	}
+	if(current_node != nullptr){
+	temp_node  = new node;
+	temp_node->data = val;
+    temp_node->next = current_node->next;
+	current_node->next = temp_node;
+	}
 }
 
 
+
+// Lets reverse the list 
+// For reversing we need three nodes, *current, *prev, and *next
+
+void reverseList(){
+	node *current, *prev, *next;
+	current = head;
+	prev = nullptr;
+	while(current != nullptr){
+		next = current->next;    //   next is the value of next value node
+		current->next = prev; 
+		prev = current;   // To null change pointer   
+		current = next;  // now prev has the address current
+	}
+	// Out of loop afte we reach nullptr
+	head = prev;  // we are end of list, head should be prev last element
+}
+
+
+/// now insert return head
+node *inserts(node *head, int value){
+	node *current = new node;
+	current->data = value;
+	current->next = nullptr;
+	if(head == nullptr){
+		head = current;
+	}else{
+		node *current_node = head;
+		while(current_node != nullptr){
+			current_node = current_node->next;
+			current_node->next = current;
+		}
+	}
+	return head;
+
+}
 
 int main(){
 	int A[] = {1,2,3,4,5,2000,999,-222,6,7,8,9,10,0,4, -1111};
@@ -211,11 +286,9 @@ int main(){
 	for(int i = 0; i < length; i++){
 		t += A[i];
 	}
-	cout << "The total sum of linked list is:  " << t << endl;
+	// cout << "The total sum of linked list is:  " << t << endl;
 	creat(A, length);
 	display(head);
-    cout << endl;
-	DisplayRec(head);
 	cout << endl;
 	cout << "The size of linked list is:  " << size(head) << endl;
 	cout << "The total sum of linked list is:  " << add(head) << endl;
@@ -229,8 +302,39 @@ int main(){
 	cout << "Max number in integer is:  " << INT_MAX << endl;
 	cout << "Min element in list is recursivlly:   " << RFindMin(head) << endl;
 	cout << "Max element in list is recursivlly with ? : operator :   " << RFindMin_T(head) << endl;
-	cout << "Searching result........  " <<    search(head, 4) << endl; 
-	cout << "Searching result........  " <<    searchR(head, 4) << endl; 
+	node *searchNode, *searchNodeR, *searchNodeFaster;
+	searchNode =sLearch(head, 2);
+	searchNodeR = LsearchR(head, 999);
+	searchNodeFaster = searchTransposnode(head, -1111);
+	searchNodeFaster = searchTransposnode(head, 999);
+	searchNodeFaster = searchTransposnode(head, 6);
+	
+	if(searchNode != nullptr){
+		cout << "Searching result found........  " <<   searchNode->data << endl; 
+	}else{
+		cout << "Note fount!........ " << endl;
+	}
+	if(LsearchR != nullptr){
+		cout << "Searching result recursivlly found........  " << searchNodeR->data   << endl;
+	}else{
+		cout << "Note fount!........ " << endl;
+	}
+	if(searchNodeFaster != nullptr){
+		cout << "Searching result recursivlly found........  " << searchNodeFaster->data   << endl;
+	}else{
+		cout << "Note fount!........ " << endl;
+	}
+
+    node *temp = nullptr;
+
+    reverseList();
+   display(head);
+
+
+
+
+
+
 
 
 

@@ -1,21 +1,9 @@
 #include <iostream>
 using std::cout;
 using std::endl;
-#include  <climits>
-
-/*
-*  Auther: Aman Arabzadeh
-*  This is just for excersize purpose, please use this code if you feel like you need it, 
-*  However mention the source, and authers name.
-*
-*
-***********************************************************/
-
-struct node{
-	int data;
-	node *next;
-} *head = nullptr;
-
+using std::cerr;
+#include <climits>
+#include "linked_list.h"
 
 
 // Creating linked list array
@@ -176,65 +164,4 @@ int RFindMin_T(node *head){
 	}
 	minElement = RFindMin_T(head->next);
 	return minElement < head->data ? minElement : head->data;
-}
-
-// Searching linked list logic
- node *search(node *head, int key){
-	while(head != nullptr){
-		if(head->data == key){
-			return head;
-		}
-		head = head->next;
-	}
-	return nullptr;
-}
-
-
-// Now searching recursivly
-node *searchR(node *head, int key){
-	// Terminating logic
-	if(head == nullptr){
-		return nullptr;
-	}else if( key == head->data){
-		return head;
-	}
-		return searchR(head->next, key);
-}
-
-
-
-int main(){
-	int A[] = {1,2,3,4,5,2000,999,-222,6,7,8,9,10,0,4, -1111};
-	size_t length = sizeof(A)/sizeof(int);
-	cout << " lngth is  " << length << endl;
-	int t = 0;
-	for(int i = 0; i < length; i++){
-		t += A[i];
-	}
-	cout << "The total sum of linked list is:  " << t << endl;
-	creat(A, length);
-	display(head);
-    cout << endl;
-	DisplayRec(head);
-	cout << endl;
-	cout << "The size of linked list is:  " << size(head) << endl;
-	cout << "The total sum of linked list is:  " << add(head) << endl;
-	cout << endl;
-	cout << "The total sum of linked list is:  " << addRecursive(head) << endl;
-	cout << "Max element in list is:   " << findMax(head) << endl;
-	cout << "Minimum number in integer is:  " << INT_MIN << endl;
-	cout << "Max element in list is recursivlly:   " << RFindMax_T(head) << endl;
-	cout << endl;
-	cout << "Min element in list is:   " << findMinimum(head) << endl;
-	cout << "Max number in integer is:  " << INT_MAX << endl;
-	cout << "Min element in list is recursivlly:   " << RFindMin(head) << endl;
-	cout << "Max element in list is recursivlly with ? : operator :   " << RFindMin_T(head) << endl;
-	cout << "Searching result........  " <<    search(head, 4) << endl; 
-	cout << "Searching result........  " <<    searchR(head, 4) << endl; 
-
-
-
-
-
-	return 0;
 }

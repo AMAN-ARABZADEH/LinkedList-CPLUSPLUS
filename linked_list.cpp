@@ -260,6 +260,30 @@ void reverseList(){
 	head = prev;  // we are end of list, head should be prev last element
 }
 
+// Inserting at any position in linked list ex 1
+
+void Insert(node *p, int pos, int x){
+	if(pos < 0 or pos > size(p) ){
+		std::cerr << "Invalid position!:::::::::" << std::endl;
+		return;
+	}
+	node *temp = new node;
+	temp->data = x;
+
+	if(pos == 0){
+		temp->next = head;
+		head = temp;
+	}else if(pos > 0){
+		for(int i = 0; i < pos - 1; i++){
+			p = p->next;
+		}
+	    if(p != nullptr){
+			temp->next = p->next;
+			p->next = temp;
+		}
+	}
+}
+
 
 /// now insert return head
 node *inserts(node *head, int value){
@@ -276,31 +300,79 @@ node *inserts(node *head, int value){
 		}
 	}
 	return head;
+}
+
+
+// Insert in a sorted list 
+void insert_in_sorted_list(node *node_name, int value){
+	node *current, *temp_node = nullptr;
+	current = new node;
+	current->data = value;
+	current->next = nullptr; 
+	if(head == nullptr)
+	{
+		head = current;
+	}
+	else
+	{
+		while(node_name != nullptr && node_name->data < value)
+		{
+			temp_node = node_name;
+			node_name = node_name->next;
+		}
+		if(node_name == head)
+		{
+			current->next = head;
+			head = current;
+		}
+		else
+		{
+			current->next = temp_node->next;
+			temp_node->next = current;
+		}
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Check for balanced parentheses using stack 
 
 
 bool parenthesisChecker(char  arr[]){
 	int size = strlen(arr);  // Takes the size of the input
-
 	std::stack<char> stk;
-
 	for(size_t i = 0; i < size; i++){
-
 		if(arr[i]== '(' or arr[i] == '[' or arr[i]  == '{' ){
-
 			stk.push(arr[i]);
-
-
 		}else if(arr[i] ==  ')' or arr[i] == ']' or arr[i] == '}' ){
 			if(stk.empty()){
 				return false;
 			}else{
 				stk.pop();
-		}
-	}
+		    }
+	    }    
 	}
 	if(stk.empty()){
 		return true;
@@ -310,7 +382,9 @@ bool parenthesisChecker(char  arr[]){
 
 
 int main(){
-	int A[] = {1,2,3,4,5,2000,999,-222,6,7,8,9,10,0,4, -1111};
+	/*
+
+int A[] = {1,2,3,4,5,2000,999,-222,6,7,8,9,10,0,4, -1111};
 	size_t length = sizeof(A)/sizeof(int);
 	cout << " lngth is  " << length << endl;
 	int t = 0;
@@ -362,7 +436,7 @@ int main(){
    display(head);
 
 
- char  par[] = "[][][](())";
+ char  par[] = "[][][](()[])";
 
 
 bool checkIF = parenthesisChecker(par);
@@ -375,6 +449,23 @@ if(checkIF == true){
 
 
 
+	*/
+
+
+insert_in_sorted_list(head, 10);
+insert_in_sorted_list(head, 2);
+insert_in_sorted_list(head, 30);
+insert_in_sorted_list(head, 44);
+insert_in_sorted_list(head, 21);
+insert_in_sorted_list(head, 12);
+insert_in_sorted_list(head, 33);
+insert_in_sorted_list(head, 231);
+insert_in_sorted_list(head, 10);
+insert_in_sorted_list(head, 0);
+insert_in_sorted_list(head, -10);
+insert_in_sorted_list(head, 10000);
+insert_in_sorted_list(head, 14);
+display(head);
 
 
 	return 0;

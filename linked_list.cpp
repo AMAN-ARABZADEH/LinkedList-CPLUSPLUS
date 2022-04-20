@@ -16,7 +16,7 @@ using std::cin;
 struct node{
 	int data;
 	node *next;
-} *head = nullptr;
+} *head = nullptr, *second = nullptr, *third = nullptr;
 
 
 
@@ -38,6 +38,22 @@ void creat(int A[], size_t sizeOfArray){
 }
 
 
+// Creating linked list array2
+
+void creat2(int A[], size_t sizeOfArray){
+	node *temp, *tail;
+	second = new node;
+	second->data = A[0];
+	second->next = nullptr;
+	tail = second;
+	for(size_t index{1}; index < sizeOfArray; ++index){
+		temp = new node;
+		temp->data = A[index];
+		temp->next = nullptr;
+		tail->next = temp;
+		tail = temp;
+	}
+}
 // printing the list
 void display(node *head){
 	 node *temp = new node;
@@ -448,8 +464,96 @@ void reverserecurise(node *q, node *p){
 
 
 
+void concat(node *first, node *second){
+	third = first;
+	while(first->next != nullptr){
+		first = first->next;
+	}
+	first->next = second;
+
+}
+
+void Merge(node *p, node *q){
+	node *last;
+	if(p->data < q->data){
+		third = last = p;
+		p = p->next;
+		third->next = nullptr;
+	}else{
+		third = last = p;
+		p = p->next;
+		third->next = nullptr;
+	}
 
 
+	while(p != nullptr && q != nullptr){
+		if(p->data < q->data){
+			last->next = p;
+			last = p;
+			p = p->next;
+			last->next = nullptr;
+		}else{
+			last->next = q;
+			last = q;
+			q = q->next;
+			last->next = nullptr;
+		}
+	}
+	if(p != nullptr){
+		last->next = p;
+	}
+	if(q != nullptr){
+		last->next = q;
+	}
+}
+
+
+
+/*
+  Here I implement circular linked list
+  ****
+**
+
+*/
+
+
+void displayCircular(node *p){
+	do  // We need do while loop because we don't want to get out of loop first time
+	{
+		cout << p->data << " ";
+		p = p->next;
+	} while (p != head);	
+		cout << endl;
+}
+
+// Now using recursion to print the lists
+// We need a temp
+void displayCircularRecursion(node *p){
+static bool flag = false;
+	if(p != head or flag == false){
+		flag = true;
+		cout << p->data << " ";
+		displayCircularRecursion(p->next);
+	}    
+	cout << endl;
+}
+
+
+// Now creating circular linke dlist type atrray in n size
+void creatCircular(int A[], int n){
+	node *current, *last;
+	head = new node;
+	head->data = A[0];
+	head->next = head;
+	last = head;
+	for(size_t i = 1; i < n; i++){
+		current = new node;
+		current->data = A[i];
+		current->next = last->next;
+		last->next = current;
+		last = current;
+	}
+}
 
 int main(){
 	/*
@@ -522,18 +626,14 @@ if(checkIF == true){
 	*/
 
 
-int A[] = {1,2,3,4,5,5,6,7,8,9,9,10,10};
+int A[] = {-111,2,3,4,5,5,6,7,8,9,9,10,10};
+int B[] = {9,2,3,4,5,5,6,7,8,9,66,200, 333};
 int siz = sizeof(A) / sizeof(int);
-creat(A, siz);
-display(head);
-// reverserecurise(head);
+ 
+creatCircular(A, siz);
+displayCircularRecursion(head);
 
-// reverseUsingArr(head);
-// reverseingList(head);
-removeDuplicate(head);
-reverserecurise(nullptr, head);
 
-display(head);
 
 	return 0;
 }

@@ -381,6 +381,76 @@ bool parenthesisChecker(char  arr[]){
 }
 
 
+void removeDuplicate(node *current){
+	node *next_node = current->next;
+	while(next_node != nullptr){
+		if(current->data != next_node->data){
+			current = next_node;
+			next_node = next_node->next;
+		}else{
+			current->next = next_node->next;
+			delete next_node;
+			next_node = current->next;
+		}
+
+	}
+}
+
+// reversing using temp array
+void reverseUsingArr(node *p){
+	int *A, i = 0;
+	node *q =p;
+	A = (int*)malloc(sizeof(int)*size(p));
+	while(q != nullptr){
+		A[i] = q->data;
+		q = q->next;
+		i++;
+	}
+	q = p;
+     i--;
+	while(q != nullptr){
+		q->data = A[i];
+		q= q->next;
+		i--;
+	}
+}
+
+
+
+
+/// Reverse the linked list
+void reverseingList(node *p){
+	node *q = nullptr;
+	node *r = nullptr;
+
+	while (p != nullptr)
+	{
+		r = q;
+		q = p;
+		p = p->next;
+		q->next = r;
+	}
+	head = q;
+	
+}
+
+
+
+void reverserecurise(node *q, node *p){
+	if(p != nullptr){
+		 reverserecurise(p, p->next);
+		 p->next = q;
+	}
+    else
+	head = q;
+
+}
+
+
+
+
+
+
 int main(){
 	/*
 
@@ -452,21 +522,18 @@ if(checkIF == true){
 	*/
 
 
-insert_in_sorted_list(head, 10);
-insert_in_sorted_list(head, 2);
-insert_in_sorted_list(head, 30);
-insert_in_sorted_list(head, 44);
-insert_in_sorted_list(head, 21);
-insert_in_sorted_list(head, 12);
-insert_in_sorted_list(head, 33);
-insert_in_sorted_list(head, 231);
-insert_in_sorted_list(head, 10);
-insert_in_sorted_list(head, 0);
-insert_in_sorted_list(head, -10);
-insert_in_sorted_list(head, 10000);
-insert_in_sorted_list(head, 14);
+int A[] = {1,2,3,4,5,5,6,7,8,9,9,10,10};
+int siz = sizeof(A) / sizeof(int);
+creat(A, siz);
 display(head);
+// reverserecurise(head);
 
+// reverseUsingArr(head);
+// reverseingList(head);
+removeDuplicate(head);
+reverserecurise(nullptr, head);
+
+display(head);
 
 	return 0;
 }
